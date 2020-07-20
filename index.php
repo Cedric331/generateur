@@ -1,8 +1,17 @@
 <?php 
 session_start();
+
+require('function.php');
+
 if (isset($formulaire)) 
 {
    $formulaire .= $_SESSION['form'];
+}
+
+// fonction reset
+if (isset($_POST['destroy'])) 
+{
+   destroy();
 }
 
 ?>
@@ -22,7 +31,7 @@ if (isset($formulaire))
 
 <body>
    <!-- Debut de page-->
-
+<div class="container">
 
    <h1>Générateur Formulaire</h1>
 
@@ -40,32 +49,26 @@ if (isset($formulaire))
          <input type="number" class="form-control" id="submit" aria-describedby="submitHelp" name="submit">
          <small id="submitHelp" class="form-text text-muted">*Facultatif</small>
       </div>
-      <button type="submit" class="btn btn-primary">Ajouter</button>
+      <button type="submit" class="btn btn-primary" name="ajouter">Ajouter</button>
+      <button type="submit" class="btn btn-primary" name="destroy">Reset</button>
    </form>
 
 <?php
 
-function formulaire($label, $input)
-   {
-      $form = "<form method=\"\" action=\"\">
-               <div class=\"form-group\">
-               <label for=\"". $label ."\">".$label."</label>
-               <input type=\"". $input ."\" class=\"form-control\" id=\"". $label ."\" name=\"". $label ."\">
-               </div>
-            </form>";
-      return $form;
-   }
-
-   if (isset($_POST['label']) AND isset($_POST['input']))
+   if (isset($_POST['label']) AND isset($_POST['input']) AND isset($_POST['ajouter']))
    {
       $formulaire = formulaire($_POST['label'], $_POST['input']);
-      echo $formulaire;
       $_SESSION['form'] .= $formulaire;
+      echo  "<form method=\"\" action=\"\">
+            <div class=\"form-group\">" . $_SESSION['form'] . "</div>
+            </form>";
    }
+
+
 
 
 ?>
-
+</div>
 
    <!-- Fin de page-->
 
