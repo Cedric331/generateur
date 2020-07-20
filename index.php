@@ -13,8 +13,8 @@ if (isset($_POST['destroy']))
 {
    destroy();
 }
-
 ?>
+
 
 <!doctype html>
 <html lang="fr">
@@ -33,7 +33,7 @@ if (isset($_POST['destroy']))
    <!-- Debut de page-->
 <div class="container">
 
-   <h1>Générateur Formulaire</h1>
+   <h1>Générateur de Formulaire</h1>
 
    <form method="POST" action="">
       <div class="form-group">
@@ -44,11 +44,6 @@ if (isset($_POST['destroy']))
          <label for="input">Nombre de Input:</label>
          <input type="text" class="form-control" id="input" name="input">
       </div>
-      <div class="form-group">
-         <label for="submit">Valeur du bouton:</label>
-         <input type="number" class="form-control" id="submit" aria-describedby="submitHelp" name="submit">
-         <small id="submitHelp" class="form-text text-muted">*Facultatif</small>
-      </div>
       <button type="submit" class="btn btn-primary" name="ajouter">Ajouter</button>
       <button type="submit" class="btn btn-primary" name="destroy">Reset</button>
    </form>
@@ -57,10 +52,21 @@ if (isset($_POST['destroy']))
 
    if (isset($_POST['label']) AND isset($_POST['input']) AND isset($_POST['ajouter']))
    {
+      // Appel de la fonction formulaire
       $formulaire = formulaire($_POST['label'], $_POST['input']);
-      $_SESSION['form'] .= $formulaire;
+
+         if (isset($_SESSION['form'])) 
+         {
+            $_SESSION['form'] .= $formulaire;
+         }
+         else
+         {
+            $_SESSION['form'] = $formulaire;
+         }
+
       echo  "<form method=\"\" action=\"\">
-            <div class=\"form-group\">" . $_SESSION['form'] . "</div>
+            <div class=\"form-group\">" . $_SESSION['form'] . "
+            </div>
             </form>";
    }
 
@@ -68,6 +74,7 @@ if (isset($_POST['destroy']))
 
 
 ?>
+
 </div>
 
    <!-- Fin de page-->
